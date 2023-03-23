@@ -120,7 +120,7 @@ class _selectState extends State<select> {
                   decoration: InputDecoration(
                     labelText: "Damage Type",
                     prefixIcon: Icon(
-                      Icons.car_crash,
+                      Icons.auto_fix_high_outlined,
                       color: Colors.white,
                     ),
                     border: OutlineInputBorder(
@@ -132,7 +132,7 @@ class _selectState extends State<select> {
               ),
             ),
 
-            
+
 
 
 
