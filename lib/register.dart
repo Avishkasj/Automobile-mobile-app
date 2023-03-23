@@ -60,7 +60,7 @@ class _registerState extends State<register> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Email',
+                        hintText: 'Mobile No',
                       ),
                     ),
                   ),
@@ -130,7 +130,7 @@ class _registerState extends State<register> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Tel-No',
+                        hintText: 'Permeant address',
                       ),
                     ),
                   ),
@@ -153,18 +153,42 @@ class _registerState extends State<register> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Address',
+                        hintText: 'Working place',
                       ),
                     ),
                   ),
                 ),
               ),
 
+              SizedBox(
+                height: 20,
+              ),
+              //email
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'ID No',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: OutlinedButton(
                   child: Text(
-                    "Register",
+                    "Next",
                     style: TextStyle(
                       color: Colors.white,
                     ),
