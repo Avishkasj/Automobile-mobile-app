@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
 
-const List<String> list = <String>[' Cars/Vans/ Cabs and Jeeps ', 'Three wheelers', 'Motor Bikes', 'Busses/ Lorries'];
-const List<String> list2 = <String>[' Electrical side', 'Mechanical side', 'Exhaust system repairing', 'Tinkering and body painting / Wrapping', 'Car diagnostic testing /Wheel alignment)', 'Battery and Hybrid system', 'Battery replacement','Tire replacement','Cushion works','Air conditioning','Welding ','Washing and cleaning'];
+const List<String> list = <String>[
+  ' Cars/Vans/ Cabs and Jeeps ',
+  'Three wheelers',
+  'Motor Bikes',
+  'Busses/ Lorries'
+];
+const List<String> list2 = <String>[
+  ' Electrical side',
+  'Mechanical side',
+  'Exhaust system repairing',
+  'Tinkering and body painting / Wrapping',
+  'Car diagnostic testing /Wheel alignment)',
+  'Battery and Hybrid system',
+  'Battery replacement',
+  'Tire replacement',
+  'Cushion works',
+  'Air conditioning',
+  'Welding ',
+  'Washing and cleaning'
+];
 
 class select extends StatefulWidget {
   const select({Key? key}) : super(key: key);
@@ -92,8 +110,6 @@ class _selectState extends State<select> {
               ),
             ),
 
-
-
             //dropdown damage
 
             Theme(
@@ -115,7 +131,6 @@ class _selectState extends State<select> {
                       dropdownValue2 = value2!;
                     });
                   },
-
                   items: list2.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -157,15 +172,15 @@ class _selectState extends State<select> {
                             },
                             activeColor: Colors.white,
                           ),
-                          Text("Petrol",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),),
+                          Text(
+                            "Petrol",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         ],
                       ),
                     ),
-
-
                     Container(
                       child: Row(
                         children: [
@@ -188,7 +203,6 @@ class _selectState extends State<select> {
                         ],
                       ),
                     ),
-
                     Container(
                       child: Row(
                         children: [
@@ -202,30 +216,41 @@ class _selectState extends State<select> {
                             },
                             activeColor: Colors.white,
                           ),
-                          Text("Electrical",
+                          Text(
+                            "Electrical",
                             style: TextStyle(
                               color: Colors.white,
-                            ),),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
               ),
             ),
 
-
-
-
-
-
-            Text(
-              'Hello, world!',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+            //next button
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: OutlinedButton(
+                child: Text(
+                  "Next",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(
+                    width: 2.0, // set the border weight to 2.0
+                    color: Colors.white,
+                  ),
+                  fixedSize: Size(150, 50),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => select()));
+                },
               ),
             ),
           ],
