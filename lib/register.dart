@@ -1,3 +1,4 @@
+import 'package:app/select.dart';
 import 'package:flutter/material.dart';
 
 class register extends StatefulWidget {
@@ -202,7 +203,7 @@ class _registerState extends State<register> {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => register()));
+                        MaterialPageRoute(builder: (context) => select()));
                   },
                 ),
               ),
