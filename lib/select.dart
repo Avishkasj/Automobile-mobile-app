@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const List<String> list = <String>[' Cars/Vans/ Cabs and Jeeps ', 'Three wheelers', 'Motor Bikes', 'Busses/ Lorries'];
-const List<String> list2 = <String>[' Cars/Vans/ Cabs and Jeeps ', 'Three wheelers', 'Motor Bikes', 'Busses/ Lorries'];
+const List<String> list2 = <String>[' Electrical side', 'Mechanical side', 'Exhaust system repairing', 'Tinkering and body painting / Wrapping', 'Car diagnostic testing /Wheel alignment)', 'Battery and Hybrid system', 'Battery replacement','Tire replacement','Cushion works','Air conditioning','Welding ','Washing and cleaning'];
 
 class select extends StatefulWidget {
   const select({Key? key}) : super(key: key);
@@ -12,6 +12,7 @@ class select extends StatefulWidget {
 
 class _selectState extends State<select> {
   String dropdownValue = list.first;
+  String dropdownValue2 = list2.first;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,16 +102,16 @@ class _selectState extends State<select> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButtonFormField(
-                  value: dropdownValue,
+                  value: dropdownValue2,
                   icon: const Icon(Icons.arrow_downward),
                   elevation: 16,
                   style: const TextStyle(color: Colors.blueAccent),
-                  onChanged: (String? value) {
+                  onChanged: (String? value2) {
                     setState(() {
-                      dropdownValue = value!;
+                      dropdownValue2 = value2!;
                     });
                   },
-                  items: list.map<DropdownMenuItem<String>>((String value) {
+                  items: list2.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
