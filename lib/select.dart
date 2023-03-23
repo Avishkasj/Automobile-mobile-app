@@ -1,3 +1,4 @@
+import 'package:app/technicians.dart';
 import 'package:flutter/material.dart';
 
 const List<String> list = <String>[
@@ -301,7 +302,7 @@ class _selectState extends State<select> {
                       ),
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => select()));
+                            MaterialPageRoute(builder: (context) => technicians()));
                       },
                     ),
                   ),
