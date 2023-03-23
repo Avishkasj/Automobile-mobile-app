@@ -231,27 +231,54 @@ class _selectState extends State<select> {
             ),
 
             //next button
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: OutlinedButton(
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                    color: Colors.white,
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: OutlinedButton(
+                    child: Text(
+                      "Reset",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        width: 2.0, // set the border weight to 2.0
+                        color: Colors.white,
+                      ),
+                      fixedSize: Size(185, 50),
+                    ),
+                    onPressed: () {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => select()));
+                    },
                   ),
                 ),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                    width: 2.0, // set the border weight to 2.0
-                    color: Colors.white,
+
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: OutlinedButton(
+                    child: Text(
+                      "Next",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        width: 2.0, // set the border weight to 2.0
+                        color: Colors.white,
+                      ),
+                      fixedSize: Size(185, 50),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => select()));
+                    },
                   ),
-                  fixedSize: Size(150, 50),
                 ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => select()));
-                },
-              ),
+              ],
             ),
           ],
         ),
