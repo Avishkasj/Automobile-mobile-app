@@ -1,4 +1,5 @@
 
+import 'package:app/login.dart';
 import 'package:flutter/material.dart';
 
 class welcome extends StatefulWidget {
@@ -26,8 +27,9 @@ class _welcomeState extends State<welcome> {
                   height: 400,
                 ),
               ),
+              SizedBox(height: 30,),
               Text(
-                "Find Your on",
+                "Find Your Mechanic",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w800,
@@ -71,8 +73,8 @@ class _welcomeState extends State<welcome> {
                             fixedSize: Size(150, 50),
                           ),
                           onPressed: () {
-                            // Navigator.push(context,
-                                // MaterialPageRoute(builder: (context) => login()));
+                            Navigator.push(context,
+                                 MaterialPageRoute(builder: (context) => login()));
 
                           },
                         ),
