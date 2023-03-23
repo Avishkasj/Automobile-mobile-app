@@ -13,6 +13,7 @@ class select extends StatefulWidget {
 class _selectState extends State<select> {
   String dropdownValue = list.first;
   String dropdownValue2 = list2.first;
+  int _selectedValue = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,41 +49,44 @@ class _selectState extends State<select> {
 
             //dropdown vehicale type
 
-            Theme(
-              data: ThemeData(
-                colorScheme: ColorScheme.light(
-                  primary: Colors.white, // set the primary color to white
-                  onSurface: Colors.white, // set the onSurface color to white
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Theme(
+                data: ThemeData(
+                  colorScheme: ColorScheme.light(
+                    primary: Colors.white, // set the primary color to white
+                    onSurface: Colors.white, // set the onSurface color to white
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButtonFormField(
-                  value: dropdownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.blueAccent),
-                  onChanged: (String? value) {
-                    setState(() {
-                      dropdownValue = value!;
-                    });
-                  },
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  decoration: InputDecoration(
-                    labelText: "Damage Type",
-                    prefixIcon: Icon(
-                      Icons.car_crash,
-                      color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButtonFormField(
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.blueAccent),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: list.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    decoration: InputDecoration(
+                      labelText: "Damage Type",
+                      prefixIcon: Icon(
+                        Icons.car_crash,
+                        color: Colors.white,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(width: 1.0),
+                      ),
+                      labelStyle: TextStyle(color: Colors.white),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(width: 1.0),
-                    ),
-                    labelStyle: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -111,6 +115,7 @@ class _selectState extends State<select> {
                       dropdownValue2 = value2!;
                     });
                   },
+
                   items: list2.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
@@ -132,7 +137,88 @@ class _selectState extends State<select> {
               ),
             ),
 
-            
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Colors.white30,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: 1,
+                            groupValue: _selectedValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedValue = value as int;
+                              });
+                            },
+                            activeColor: Colors.white,
+                          ),
+                          Text("Petrol",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),),
+                        ],
+                      ),
+                    ),
+
+
+                    Container(
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: 2,
+                            groupValue: _selectedValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedValue = value as int;
+                              });
+                            },
+                            activeColor: Colors.white,
+                          ),
+                          Text(
+                            "Diesel",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: 3,
+                            groupValue: _selectedValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedValue = value as int;
+                              });
+                            },
+                            activeColor: Colors.white,
+                          ),
+                          Text("Electrical",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),),
+                        ],
+                      ),
+                    ),
+
+
+                  ],
+                ),
+              ),
+            ),
+
+
+
+
 
 
             Text(
