@@ -3,10 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
-import 'dart:convert';
-
-import 'network_utiliti.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,33 +17,6 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   //for map
 
-  // Future<void> placeAutocomplete(String query) async {
-  //   String apiKey = "AIzaSyCr3P8F9580lfZt5dQA_7N64X3XNaejsRA";
-  //   Uri uri = Uri.https(
-  //     "maps.googleapis.com",
-  //     '/maps/api/place/autocomplete/json',
-  //     {
-  //       "input": query,
-  //       "key": apiKey,
-  //     },
-  //   );
-  //
-  //   try {
-  //     http.Response response = await http.get(uri);
-  //     if (response.statusCode == 200) {
-  //       Map<String, dynamic> responseBody = json.decode(response.body);
-  //       List<dynamic> predictions = responseBody["predictions"];
-  //       for (var prediction in predictions) {
-  //         String description = prediction["description"];
-  //         print(description);
-  //       }
-  //     } else {
-  //       print("Request failed with status: ${response.statusCode}");
-  //     }
-  //   } catch (e) {
-  //     print("Error: $e");
-  //   }
-  // }
 
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
@@ -63,47 +34,6 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController mechanicPasswordController = TextEditingController();
   TextEditingController mechanicLocationController = TextEditingController();
 
-  var uuid = Uuid();
-  String sessionToken = '122344';
-  List<dynamic> _placeList = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    mechanicLocationController.addListener(() {
-      onChange();
-    });
-  }
-
-  void onChange() {
-    if (sessionToken == null) {
-      setState(() {
-        sessionToken = uuid.v4();
-      });
-    }
-
-    getSuggstion(mechanicLocationController.text);
-  }
-
-  void getSuggstion(String input) async {
-    String API_KEY = "AIzaSyC_OcQXalmcP3E_f-ZNZp-CZMV6JgPAbWM";
-    String baseURL =
-        "https://maps.googleapis.com/maps/api/place/autocomplete/json";
-    String request =
-        '$baseURL?input=$input&key=$API_KEY&sessiontoken=$sessionToken';
-
-    var response = await http.get(Uri.parse(request));
-    var data = response.body.toString();
-
-    if (response.statusCode == 200) {
-      setState(() {
-        _placeList = jsonDecode(response.body.toString())['discription'];
-      });
-    } else {
-      throw Exception('Faild to load data');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -470,31 +400,15 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
 
               Container(
-                child: TextFormField(
-                  controller: mechanicLocationController,
-                  decoration: InputDecoration(
-                    hintText: 'Search place',
-                  ),
-                ),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 20),
+                    placesAutoCompleteTextField(),
+                  ],
+                )
               ),
 
-              Expanded(
-                child: ListView.builder(
-                    itemCount: _placeList.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(_placeList[index]['discription'],style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),),
-                      );
-                    }),
-              ),
 
-              // LocationListTitle(
-              //   press:(){},
-              //   location: "Banasa, dhaka",
-              // ),
 
               Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -630,6 +544,7 @@ class _RegisterPageState extends State<RegisterPage> {
     String mobile = mechanicMobileController.text;
     String password = mechanicPasswordController.text;
     String email = mechanicEmailController.text;
+    String address = mechanicLocationController.text;
 
     if (name.isNotEmpty && age.isNotEmpty && mobile.isNotEmpty) {
       // Create a new mechanic document in Firestore
@@ -639,6 +554,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'mobile': mobile,
         'email': email,
         'role': "2",
+        'address' : address,
       });
 
       // Register the user with Firebase Authentication
@@ -672,5 +588,30 @@ class _RegisterPageState extends State<RegisterPage> {
         },
       );
     }
+  }
+
+
+  placesAutoCompleteTextField() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: GooglePlaceAutoCompleteTextField(
+          textEditingController: mechanicLocationController,
+          googleAPIKey: "AIzaSyC_OcQXalmcP3E_f-ZNZp-CZMV6JgPAbWM",
+          inputDecoration: InputDecoration(hintText: "Search your location"),
+          debounceTime: 800,
+          countries: ["lk"],
+          isLatLngRequired: true,
+          getPlaceDetailWithLatLng: (Prediction prediction) {
+            print("placeDetails" + prediction.lng.toString());
+          },
+          itmClick: (Prediction prediction) {
+            mechanicLocationController.text = prediction.description!;
+
+            mechanicLocationController.selection = TextSelection.fromPosition(
+                TextPosition(offset: prediction.description!.length));
+          }
+        // default 600 ms ,
+      ),
+    );
   }
 }
