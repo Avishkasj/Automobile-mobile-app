@@ -1,6 +1,7 @@
 
 import 'package:app/login.dart';
 import 'package:app/register.dart';
+import 'package:app/test.dart';
 import 'package:flutter/material.dart';
 
 class welcome extends StatefulWidget {
@@ -98,7 +99,7 @@ class _welcomeState extends State<welcome> {
                           ),
                           onPressed: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => RegisterPage()));
+                                MaterialPageRoute(builder: (context) => test()));
                           },
                         ),
                       ),

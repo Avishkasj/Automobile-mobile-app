@@ -162,7 +162,6 @@ class _selectState extends State<select> {
                 ),
               ),
 
-
               //fual type
 
               Theme(
@@ -205,87 +204,87 @@ class _selectState extends State<select> {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: Colors.white30,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Radio(
-                              value: 1,
-                              groupValue: _selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedValue = value as int;
-                                });
-                              },
-                              activeColor: Colors.white,
-                            ),
-                            Text(
-                              "Petrol",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Radio(
-                              value: 2,
-                              groupValue: _selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedValue = value as int;
-                                });
-                              },
-                              activeColor: Colors.white,
-                            ),
-                            Text(
-                              "Diesel",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Radio(
-                              value: 3,
-                              groupValue: _selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedValue = value as int;
-                                });
-                              },
-                              activeColor: Colors.white,
-                            ),
-                            Text(
-                              "Electrical",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Container(
+              //     color: Colors.white30,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       children: [
+              //         Container(
+              //           child: Row(
+              //             children: [
+              //               Radio(
+              //                 value: 1,
+              //                 groupValue: _selectedValue,
+              //                 onChanged: (value) {
+              //                   setState(() {
+              //                     _selectedValue = value as int;
+              //                   });
+              //                 },
+              //                 activeColor: Colors.white,
+              //               ),
+              //               Text(
+              //                 "Petrol",
+              //                 style: TextStyle(
+              //                   color: Colors.white,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //         Container(
+              //           child: Row(
+              //             children: [
+              //               Radio(
+              //                 value: 2,
+              //                 groupValue: _selectedValue,
+              //                 onChanged: (value) {
+              //                   setState(() {
+              //                     _selectedValue = value as int;
+              //                   });
+              //                 },
+              //                 activeColor: Colors.white,
+              //               ),
+              //               Text(
+              //                 "Diesel",
+              //                 style: TextStyle(
+              //                   color: Colors.white,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //         Container(
+              //           child: Row(
+              //             children: [
+              //               Radio(
+              //                 value: 3,
+              //                 groupValue: _selectedValue,
+              //                 onChanged: (value) {
+              //                   setState(() {
+              //                     _selectedValue = value as int;
+              //                   });
+              //                 },
+              //                 activeColor: Colors.white,
+              //               ),
+              //               Text(
+              //                 "Electrical",
+              //                 style: TextStyle(
+              //                   color: Colors.white,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
 
 
-              SizedBox(height: 200,),
+              SizedBox(height: 180,),
               //next button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

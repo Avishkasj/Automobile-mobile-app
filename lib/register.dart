@@ -2,8 +2,11 @@ import 'package:app/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:app/select.dart';
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
+import 'dart:convert';
 
+import 'network_utiliti.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -12,7 +15,38 @@ class RegisterPage extends StatefulWidget {
   _RegisterPageState createState() => _RegisterPageState();
 }
 
+
 class _RegisterPageState extends State<RegisterPage> {
+  //for map
+
+  // Future<void> placeAutocomplete(String query) async {
+  //   String apiKey = "AIzaSyCr3P8F9580lfZt5dQA_7N64X3XNaejsRA";
+  //   Uri uri = Uri.https(
+  //     "maps.googleapis.com",
+  //     '/maps/api/place/autocomplete/json',
+  //     {
+  //       "input": query,
+  //       "key": apiKey,
+  //     },
+  //   );
+  //
+  //   try {
+  //     http.Response response = await http.get(uri);
+  //     if (response.statusCode == 200) {
+  //       Map<String, dynamic> responseBody = json.decode(response.body);
+  //       List<dynamic> predictions = responseBody["predictions"];
+  //       for (var prediction in predictions) {
+  //         String description = prediction["description"];
+  //         print(description);
+  //       }
+  //     } else {
+  //       print("Request failed with status: ${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     print("Error: $e");
+  //   }
+  // }
+
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
 
@@ -27,6 +61,49 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController mechanicMobileController = TextEditingController();
   TextEditingController mechanicEmailController = TextEditingController();
   TextEditingController mechanicPasswordController = TextEditingController();
+  TextEditingController mechanicLocationController = TextEditingController();
+
+  var uuid = Uuid();
+  String sessionToken = '122344';
+  List<dynamic> _placeList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mechanicLocationController.addListener(() {
+      onChange();
+    });
+  }
+
+  void onChange() {
+    if (sessionToken == null) {
+      setState(() {
+        sessionToken = uuid.v4();
+      });
+    }
+
+    getSuggstion(mechanicLocationController.text);
+  }
+
+  void getSuggstion(String input) async {
+    String API_KEY = "AIzaSyC_OcQXalmcP3E_f-ZNZp-CZMV6JgPAbWM";
+    String baseURL =
+        "https://maps.googleapis.com/maps/api/place/autocomplete/json";
+    String request =
+        '$baseURL?input=$input&key=$API_KEY&sessiontoken=$sessionToken';
+
+    var response = await http.get(Uri.parse(request));
+    var data = response.body.toString();
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _placeList = jsonDecode(response.body.toString())['discription'];
+      });
+    } else {
+      throw Exception('Faild to load data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +117,6 @@ class _RegisterPageState extends State<RegisterPage> {
               image: AssetImage('assets/bg1.jpg'),
               fit: BoxFit.cover,
             ),
-
           ),
         ),
         title: Text(
@@ -88,12 +164,16 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(25.0),
-                child: Text("Customer",style: TextStyle(
-                  fontSize: 30,
-                ),),
+                child: Text(
+                  "Customer",
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
+                ),
               ),
-
-              SizedBox(height: 0,),
+              SizedBox(
+                height: 0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
@@ -116,7 +196,6 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: 20,
               ),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
@@ -266,12 +345,17 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(25.0),
-                child: Text("Macanic",style: TextStyle(
-                  fontSize: 30,
-                ),),
+                child: Text(
+                  "Macanic",
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
+                ),
               ),
 
-              SizedBox(height: 0,),
+              SizedBox(
+                height: 0,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
@@ -384,6 +468,34 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(
                 height: 20,
               ),
+
+              Container(
+                child: TextFormField(
+                  controller: mechanicLocationController,
+                  decoration: InputDecoration(
+                    hintText: 'Search place',
+                  ),
+                ),
+              ),
+
+              Expanded(
+                child: ListView.builder(
+                    itemCount: _placeList.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(_placeList[index]['discription'],style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),),
+                      );
+                    }),
+              ),
+
+              // LocationListTitle(
+              //   press:(){},
+              //   location: "Banasa, dhaka",
+              // ),
+
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: OutlinedButton(
@@ -456,7 +568,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'password': password,
           'email': email,
           'address': address,
-          'role' : "1",
+          'role': "1",
         });
 
         // Register the user with Firebase Authentication
@@ -512,7 +624,6 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
   void _registerMechanic() async {
     String name = mechanicNameController.text;
     String age = mechanicAgeController.text;
@@ -527,7 +638,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'age': age,
         'mobile': mobile,
         'email': email,
-        'role' : "2",
+        'role': "2",
       });
 
       // Register the user with Firebase Authentication
