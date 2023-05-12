@@ -22,6 +22,13 @@ const List<String> list2 = <String>[
   'Washing and cleaning'
 ];
 
+const List<String> list3 = <String>[
+  'Petrol',
+  'Diesel',
+  'Electric',
+
+];
+
 class select extends StatefulWidget {
   const select({Key? key}) : super(key: key);
 
@@ -32,6 +39,7 @@ class select extends StatefulWidget {
 class _selectState extends State<select> {
   String dropdownValue = list.first;
   String dropdownValue2 = list2.first;
+  String dropdownValue3 = list3.first;
   int _selectedValue = 1;
   @override
   Widget build(BuildContext context) {
@@ -67,7 +75,7 @@ class _selectState extends State<select> {
                 ),
               ),
 
-              //dropdown vehicale type
+              //dropdown vehicle type
 
               Padding(
                 padding: const EdgeInsets.only(top: 10),
@@ -97,7 +105,7 @@ class _selectState extends State<select> {
                         );
                       }).toList(),
                       decoration: InputDecoration(
-                        labelText: "Damage Type",
+                        labelText: "Vehicle type",
                         prefixIcon: Icon(
                           Icons.car_crash,
                           color: Colors.white,
@@ -143,6 +151,49 @@ class _selectState extends State<select> {
                       labelText: "Damage Type",
                       prefixIcon: Icon(
                         Icons.auto_fix_high_outlined,
+                        color: Colors.white,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(width: 1.0),
+                      ),
+                      labelStyle: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+
+
+              //fual type
+
+              Theme(
+                data: ThemeData(
+                  colorScheme: ColorScheme.light(
+                    primary: Colors.white, // set the primary color to white
+                    onSurface: Colors.white, // set the onSurface color to white
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButtonFormField(
+                    value: dropdownValue3,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.blueAccent),
+                    onChanged: (String? value2) {
+                      setState(() {
+                        dropdownValue3 = value2!;
+                      });
+                    },
+                    items: list3.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    decoration: InputDecoration(
+                      labelText: "Fuak Type",
+                      prefixIcon: Icon(
+                        Icons.electric_bike,
                         color: Colors.white,
                       ),
                       border: OutlineInputBorder(
@@ -232,34 +283,12 @@ class _selectState extends State<select> {
                 ),
               ),
 
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Container(
-              //         color: Colors.white,
-              //         height: 185,
-              //         width: 185,
-              //         child: Text('test'),
-              //       ),
-              //     ),
-              //
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Container(
-              //         color: Colors.white30,
-              //         height: 185,
-              //         width: 185,
-              //         child: Text('test'),
-              //       ),
-              //     )
-              //   ],
-              // ),
 
-              SizedBox(height: 240,),
+
+              SizedBox(height: 200,),
               //next button
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -275,7 +304,7 @@ class _selectState extends State<select> {
                           width: 2.0, // set the border weight to 2.0
                           color: Colors.white,
                         ),
-                        fixedSize: Size(185, 50),
+                        fixedSize: Size(140, 50),
                       ),
                       onPressed: () {
                         // Navigator.push(context,
@@ -298,7 +327,7 @@ class _selectState extends State<select> {
                           width: 2.0, // set the border weight to 2.0
                           color: Colors.white,
                         ),
-                        fixedSize: Size(185, 50),
+                        fixedSize: Size(140, 50),
                       ),
                       onPressed: () {
                         Navigator.push(context,

@@ -45,6 +45,7 @@ dependencies:
   email_validator: ^2.1.17
   geocoding: ^2.0.1
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

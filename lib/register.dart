@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:app/select.dart';
 
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -85,7 +86,14 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Container(
           child: Column(
             children: [
-              Text("Customer"),
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Text("Customer",style: TextStyle(
+                  fontSize: 30,
+                ),),
+              ),
+
+              SizedBox(height: 0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Container(
@@ -220,7 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account? ",
+                      "Register As mechanic? ",
                     ),
                     GestureDetector(
                       onTap: () {
@@ -252,171 +260,180 @@ class _RegisterPageState extends State<RegisterPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 40),
       //Macanic
-      child: Container(
-        child: Column(
-          children: [
-            Text("Macanic"),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: mechanicEmailController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'E-mail',
-                    ),
-                  ),
-                ),
+      child: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Text("Macanic",style: TextStyle(
+                  fontSize: 30,
+                ),),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: mechanicPasswordController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Password',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: mechanicNameController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Name',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: mechanicAgeController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Age',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: mechanicMobileController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Mobile No',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: OutlinedButton(
-                child: Text(
-                  "Register",
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                    width: 2.0, // set the border weight to 2.0
-                    color: Colors.black,
-                  ),
-                  fixedSize: Size(150, 50),
-                ),
-                onPressed: () {
-                  _registerMechanic();
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account? ",
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _pageController.animateToPage(
-                        0,
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+              SizedBox(height: 0,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: mechanicEmailController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'E-mail',
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: mechanicPasswordController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Password',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: mechanicNameController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Name',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: mechanicAgeController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Age',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: mechanicMobileController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Mobile No',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: OutlinedButton(
+                  child: Text(
+                    "Register",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(
+                      width: 2.0, // set the border weight to 2.0
+                      color: Colors.black,
+                    ),
+                    fixedSize: Size(150, 50),
+                  ),
+                  onPressed: () {
+                    _registerMechanic();
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Register As User? ",
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _pageController.animateToPage(
+                          0,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      },
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
