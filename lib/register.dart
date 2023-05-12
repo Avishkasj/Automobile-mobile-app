@@ -39,6 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
               image: AssetImage('assets/bg1.jpg'),
               fit: BoxFit.cover,
             ),
+
           ),
         ),
         title: Text(
@@ -433,11 +434,12 @@ class _RegisterPageState extends State<RegisterPage> {
         address.isNotEmpty) {
       try {
         // Create a new customer document in Firestore
-        await FirebaseFirestore.instance.collection('customers').add({
+        await FirebaseFirestore.instance.collection('user').add({
           'mobile': mobile,
           'password': password,
           'email': email,
           'address': address,
+          'role' : "1",
         });
 
         // Register the user with Firebase Authentication
@@ -503,11 +505,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (name.isNotEmpty && age.isNotEmpty && mobile.isNotEmpty) {
       // Create a new mechanic document in Firestore
-      await FirebaseFirestore.instance.collection('mechanics').add({
+      await FirebaseFirestore.instance.collection('user').add({
         'name': name,
         'age': age,
         'mobile': mobile,
         'email': email,
+        'role' : "2",
       });
 
       // Register the user with Firebase Authentication
