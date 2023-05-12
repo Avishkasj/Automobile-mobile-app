@@ -24,6 +24,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController mechanicNameController = TextEditingController();
   TextEditingController mechanicAgeController = TextEditingController();
   TextEditingController mechanicMobileController = TextEditingController();
+  TextEditingController mechanicEmailController = TextEditingController();
+  TextEditingController mechanicPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +79,182 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _buildRegistrationFormPageOne() {
     return Padding(
       padding: const EdgeInsets.only(top: 40),
+      //Customer
+      child: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              Text("Customer"),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: customerEmailController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'E-mail',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: customerPasswordController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Password',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: customerMobileController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Mobile No',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      controller: customerAddressController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Permanent Address',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white30,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'ID No',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: OutlinedButton(
+                  child: Text(
+                    "Register",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(
+                      width: 2.0, // set the border weight to 2.0
+                      color: Colors.black,
+                    ),
+                    fixedSize: Size(150, 50),
+                  ),
+                  onPressed: () {
+                    _registerCustomer();
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account? ",
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _pageController.animateToPage(
+                          1,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      },
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRegistrationFormPageTwo() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 40),
+      //Macanic
       child: Container(
         child: Column(
           children: [
-            Text("Customer"),
+            Text("Macanic"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
@@ -91,51 +265,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: TextField(
-                    controller: customerMobileController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Mobile No',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: customerPasswordController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Password',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    controller: customerEmailController,
+                    controller: mechanicEmailController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'E-mail',
@@ -147,6 +277,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(
               height: 20,
             ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
@@ -157,97 +288,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: TextField(
-                    controller: customerAddressController,
+                    controller: mechanicPasswordController,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Working place',
+                      hintText: 'Password',
                     ),
                   ),
                 ),
               ),
             ),
+
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white30,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'ID No',
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: OutlinedButton(
-                child: Text(
-                  "Register",
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                    width: 2.0, // set the border weight to 2.0
-                    color: Colors.black,
-                  ),
-                  fixedSize: Size(150, 50),
-                ),
-                onPressed: () {
-                  _registerCustomer();
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account? ",
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _pageController.animateToPage(
-                        1,
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: Text(
-                      "Sign In",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRegistrationFormPageTwo() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40),
-      child: Container(
-        child: Column(
-          children: [
-            Text("Macanic"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
@@ -445,6 +498,8 @@ class _RegisterPageState extends State<RegisterPage> {
     String name = mechanicNameController.text;
     String age = mechanicAgeController.text;
     String mobile = mechanicMobileController.text;
+    String password = mechanicPasswordController.text;
+    String email = mechanicEmailController.text;
 
     if (name.isNotEmpty && age.isNotEmpty && mobile.isNotEmpty) {
       // Create a new mechanic document in Firestore
@@ -452,7 +507,14 @@ class _RegisterPageState extends State<RegisterPage> {
         'name': name,
         'age': age,
         'mobile': mobile,
+        'email': email,
       });
+
+      // Register the user with Firebase Authentication
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email, // Use the email as the username
+        password: password,
+      );
 
       // Navigate to the select page
       Navigator.push(
