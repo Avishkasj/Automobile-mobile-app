@@ -98,7 +98,7 @@ class _welcomeState extends State<welcome> {
                           ),
                           onPressed: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => register()));
+                                MaterialPageRoute(builder: (context) => RegisterPage()));
                           },
                         ),
                       ),
