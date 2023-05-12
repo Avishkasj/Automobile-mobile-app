@@ -58,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: SizedBox(),
         ),
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -107,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -129,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -151,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -190,15 +190,15 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: const EdgeInsets.all(15.0),
               child: OutlinedButton(
                 child: Text(
-                  "Next",
+                  "Register",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
                     width: 2.0, // set the border weight to 2.0
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   fixedSize: Size(150, 50),
                 ),
@@ -252,7 +252,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -274,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -296,7 +296,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white30,
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -319,13 +319,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Text(
                   "Register",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(
                     width: 2.0, // set the border weight to 2.0
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   fixedSize: Size(150, 50),
                 ),
