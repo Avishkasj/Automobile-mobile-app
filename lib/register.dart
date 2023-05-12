@@ -80,6 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Container(
         child: Column(
           children: [
+            Text("Customer"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
@@ -246,7 +247,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Container(
         child: Column(
           children: [
-
+            Text("Macanic"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
