@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
-
 class technicians extends StatefulWidget {
-  const technicians({Key? key}) : super(key: key);
+  final String dropdownValue;
+  final String dropdownValue2;
+  final String dropdownValue3;
+  final String addressValue;
+
+  const technicians({
+    Key? key,
+    required this.dropdownValue,
+    required this.dropdownValue2,
+    required this.dropdownValue3,
+    required this.addressValue,
+  }) : super(key: key);
 
   @override
-  State<technicians> createState() => _techniciansState();
+  _techniciansState createState() => _techniciansState();
 }
 
 class _techniciansState extends State<technicians> {
@@ -31,7 +41,7 @@ class _techniciansState extends State<technicians> {
                 child: TextField(
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.location_on, color: Colors.white),
-                    labelText: 'Kurunegala Rd, Bingiriya. Bowatta, Bingiriya.',
+                    labelText:" ${widget.addressValue}",
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),

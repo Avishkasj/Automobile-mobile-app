@@ -217,87 +217,9 @@ class _selectState extends State<select> {
                 ),
               ),
 
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Container(
-              //     color: Colors.white30,
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //       children: [
-              //         Container(
-              //           child: Row(
-              //             children: [
-              //               Radio(
-              //                 value: 1,
-              //                 groupValue: _selectedValue,
-              //                 onChanged: (value) {
-              //                   setState(() {
-              //                     _selectedValue = value as int;
-              //                   });
-              //                 },
-              //                 activeColor: Colors.white,
-              //               ),
-              //               Text(
-              //                 "Petrol",
-              //                 style: TextStyle(
-              //                   color: Colors.white,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //         Container(
-              //           child: Row(
-              //             children: [
-              //               Radio(
-              //                 value: 2,
-              //                 groupValue: _selectedValue,
-              //                 onChanged: (value) {
-              //                   setState(() {
-              //                     _selectedValue = value as int;
-              //                   });
-              //                 },
-              //                 activeColor: Colors.white,
-              //               ),
-              //               Text(
-              //                 "Diesel",
-              //                 style: TextStyle(
-              //                   color: Colors.white,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //         Container(
-              //           child: Row(
-              //             children: [
-              //               Radio(
-              //                 value: 3,
-              //                 groupValue: _selectedValue,
-              //                 onChanged: (value) {
-              //                   setState(() {
-              //                     _selectedValue = value as int;
-              //                   });
-              //                 },
-              //                 activeColor: Colors.white,
-              //               ),
-              //               Text(
-              //                 "Electrical",
-              //                 style: TextStyle(
-              //                   color: Colors.white,
-              //                 ),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
 
 
-
-              SizedBox(height: 180,),
+              SizedBox(height: 110,),
               //next button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -342,9 +264,21 @@ class _selectState extends State<select> {
                         fixedSize: Size(140, 50),
                       ),
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => technicians()));
+                        String addressValue = address.text; // the value entered in the address field
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => technicians(
+                              dropdownValue: dropdownValue,
+                              dropdownValue2: dropdownValue2,
+                              dropdownValue3: dropdownValue3,
+                              addressValue: addressValue,
+                            ),
+                          ),
+                        );
                       },
+
                     ),
                   ),
                 ],
