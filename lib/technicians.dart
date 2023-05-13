@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class technicians extends StatefulWidget {
   final String dropdownValue;
   final String dropdownValue2;
@@ -18,6 +20,22 @@ class technicians extends StatefulWidget {
 }
 
 class _techniciansState extends State<technicians> {
+  late Future<QuerySnapshot<Map<String, dynamic>>> _userDetailsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _userDetailsFuture = fetchUserDetails();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchUserDetails() async {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .where('role', isEqualTo: '2')
+        .where('address', isEqualTo: "${widget.addressValue}")
+        .get();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +59,7 @@ class _techniciansState extends State<technicians> {
                 child: TextField(
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.location_on, color: Colors.white),
-                    labelText:" ${widget.addressValue}",
+                    labelText: " ${widget.addressValue}",
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -54,227 +72,99 @@ class _techniciansState extends State<technicians> {
                 ),
               ),
             ),
+            FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              future: _userDetailsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(); // Show a loading indicator while fetching data
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  final userDetails =
+                      snapshot.data?.docs.map((doc) => doc.data()).toList();
 
-            //card
-            Card(
-              elevation: 4.0,
-              margin: EdgeInsets.all(16.0),
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/img6.png'),
-                      radius: 40.0,
-                    ),
-                    SizedBox(width: 16.0),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Avishka S',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Sri Lanka, Kurunegala',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Row(
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: userDetails?.length,
+                    itemBuilder: (context, index) {
+                      final user = userDetails![index];
+                      return Card(
+                        elevation: 4.0,
+                        margin: EdgeInsets.all(16.0),
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.star, color: Colors.yellow),
-                              SizedBox(width: 8.0),
-                              Text(
-                                '4.5',
-                                style: TextStyle(fontSize: 16.0),
+                              CircleAvatar(
+                                backgroundImage:
+                                    AssetImage('assets/img${index + 6}.png'),
+                                radius: 40.0,
+                              ),
+                              SizedBox(width: 16.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      user['email'] as String,
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    Text(
+                                      user['age'] as String,
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.star, color: Colors.yellow),
+                                        SizedBox(width: 8.0),
+                                        // Text(
+                                        //   user['rating'],
+                                        //   style: TextStyle(fontSize: 16.0),
+                                        // ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 16.0),
+                              OutlinedButton(
+                                child: Text(
+                                  "Contact",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                    side: BorderSide(
+                                  width: 2.0, // set the border weight to 2.0
+                                  color: Colors.black,
+                                )),
+                                onPressed: () {
+                                  // Contact button pressed
+                                },
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
-
-                    OutlinedButton(
-                      child: Text(
-                        "Contact",
-                        style: TextStyle(
-                          color: Colors.black,
                         ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(
-                          width: 2.0, // set the border weight to 2.0
-                          color: Colors.black,
-                        )
-                      ),
-                      onPressed: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) => select()));
-                      },
-                    ),
-
-                  ],
-                ),
-              ),
+                      );
+                    },
+                  );
+                } else {
+                  return Text(
+                      'No data found.'); // Displayed when there are no user details
+                }
+              },
             ),
-
-            //card 2
-            Card(
-              elevation: 4.0,
-              margin: EdgeInsets.fromLTRB(16, 3, 16, 16),
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/img7.png'),
-                      radius: 40.0,
-                    ),
-                    SizedBox(width: 16.0),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Kasun J',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Sri Lanka, Kurunegala',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Row(
-                            children: [
-                              Icon(Icons.star, color: Colors.yellow),
-                              SizedBox(width: 8.0),
-                              Text(
-                                '4.5',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
-
-                    OutlinedButton(
-                      child: Text(
-                        "Contact",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                            width: 2.0, // set the border weight to 2.0
-                            color: Colors.black,
-                          )
-                      ),
-                      onPressed: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) => select()));
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-
-
-
-            //card 3
-            Card(
-              elevation: 4.0,
-              margin: EdgeInsets.fromLTRB(16, 3, 16, 16),
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/img8.png'),
-                      radius: 40.0,
-                    ),
-                    SizedBox(width: 16.0),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Janaka N',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Sri Lanka, Kurunegala',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          SizedBox(height: 8.0),
-                          Row(
-                            children: [
-                              Icon(Icons.star, color: Colors.yellow),
-                              SizedBox(width: 8.0),
-                              Text(
-                                '4.5',
-                                style: TextStyle(fontSize: 16.0),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
-
-                    OutlinedButton(
-                      child: Text(
-                        "Contact",
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                            width: 2.0, // set the border weight to 2.0
-                            color: Colors.black,
-                          )
-                      ),
-                      onPressed: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) => select()));
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
           ],
         ),
       ),
