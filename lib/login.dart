@@ -1,4 +1,5 @@
 
+import 'package:app/mechanic.dart';
 import 'package:app/select.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,9 @@ final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
 String errorMessage = '';
 var userRole;
+var id;
+
+
 
 
 
@@ -137,18 +141,41 @@ class _loginState extends State<login> {
                       ),
                       fixedSize: Size(150, 50),
                     ),
+
                     onPressed: () async {
                       try {
-                        String email =  emailController.text;
-                        String passowr = passwordController.text;
-                        getUidFromEmailAndPassword(email,passowr);
+                        String email = emailController.text;
+                        String password = passwordController.text;
+
+                        // Get the user ID using your authentication method
+
+                        String? uid = await getUidFromEmailAndPassword(email, password);
+
+                        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+                            .collection('user')
+                            .where('uid', isEqualTo: uid)
+                            .get();
+
+                        querySnapshot.docs.forEach((doc) {
+                          // Access the role value and assign it to a string variable
+                          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+                          String role = data['role'] as String;
+                          print('Role: $role');
+
+                          if(role == '1'){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => select()),
+                            );
+                          }else if(role == '2'){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => mechanic()),
+                            );
+                          }
 
 
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => select()),
-                        );
+                        });
 
 
                       } on FirebaseAuthException catch (e) {
@@ -212,6 +239,7 @@ class _loginState extends State<login> {
         password: password,
       );
 
+
       print("----------------------");
       print(userCredential?.user?.uid?.toString());
 
@@ -227,7 +255,10 @@ class _loginState extends State<login> {
       print(uid);
       print("----------------------");
 
-      return role;
+
+
+
+      return uid;
 
 
 

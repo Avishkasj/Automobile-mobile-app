@@ -488,8 +488,9 @@ class _RegisterPageState extends State<RegisterPage> {
           'mobile': mobile,
           'password': password,
           'email': email,
+          'role': "1",
           'address': address,
-          'role': uid,
+          'uid' : uid,
         });
 
         // Register the user with Firebase Authentication
