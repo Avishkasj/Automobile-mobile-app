@@ -214,10 +214,20 @@ class _loginState extends State<login> {
 
       print("----------------------");
       print(userCredential?.user?.uid?.toString());
+
       print("----------------------");
 
+      String? uid= userCredential?.user?.uid?.toString();
+      // DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('user').doc(uid).get();
+      // String role = userSnapshot.get('role');
 
-        return userCredential?.user?.uid?.toString();
+      String ?role;
+
+      print("----------------------");
+      print(uid);
+      print("----------------------");
+
+      return role;
 
 
 
