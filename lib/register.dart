@@ -477,12 +477,19 @@ class _RegisterPageState extends State<RegisterPage> {
         address.isNotEmpty) {
       try {
         // Create a new customer document in Firestore
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        // Create a new mechanic document in Firestore
+        String uid = userCredential.user!.uid;
         await FirebaseFirestore.instance.collection('user').add({
           'mobile': mobile,
           'password': password,
           'email': email,
           'address': address,
-          'role': "1",
+          'role': uid,
         });
 
         // Register the user with Firebase Authentication
@@ -547,7 +554,16 @@ class _RegisterPageState extends State<RegisterPage> {
     String address = mechanicLocationController.text;
 
     if (name.isNotEmpty && age.isNotEmpty && mobile.isNotEmpty) {
+
+      // Register the user with Firebase Authentication
+
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
       // Create a new mechanic document in Firestore
+      String uid = userCredential.user!.uid;
       await FirebaseFirestore.instance.collection('user').add({
         'name': name,
         'age': age,
@@ -555,13 +571,10 @@ class _RegisterPageState extends State<RegisterPage> {
         'email': email,
         'role': "2",
         'address' : address,
+        'uid' : uid,
       });
 
-      // Register the user with Firebase Authentication
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email, // Use the email as the username
-        password: password,
-      );
+
 
       // Navigate to the select page
       Navigator.push(

@@ -1,5 +1,7 @@
 import 'package:app/technicians.dart';
 import 'package:flutter/material.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 
 const List<String> list = <String>[
   ' Cars/Vans/ Cabs and Jeeps ',
@@ -35,6 +37,8 @@ class select extends StatefulWidget {
   @override
   State<select> createState() => _selectState();
 }
+
+TextEditingController address = TextEditingController();
 
 class _selectState extends State<select> {
   String dropdownValue = list.first;
@@ -204,6 +208,15 @@ class _selectState extends State<select> {
                 ),
               ),
 
+              Container(
+                child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 20),
+                      placesAutoCompleteTextField(),
+                    ],
+                ),
+              ),
+
               // Padding(
               //   padding: const EdgeInsets.all(8.0),
               //   child: Container(
@@ -338,6 +351,35 @@ class _selectState extends State<select> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+
+  placesAutoCompleteTextField() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Container(
+        color: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: GooglePlaceAutoCompleteTextField(
+            textEditingController: address,
+            googleAPIKey: "AIzaSyC_OcQXalmcP3E_f-ZNZp-CZMV6JgPAbWM",
+            inputDecoration: InputDecoration(hintText: "Search your location"),
+            debounceTime: 800,
+            countries: ["lk"],
+            isLatLngRequired: true,
+            getPlaceDetailWithLatLng: (Prediction prediction) {
+              print("placeDetails" + prediction.lng.toString());
+            },
+            itmClick: (Prediction prediction) {
+              address.text = prediction.description!;
+
+              address.selection = TextSelection.fromPosition(
+                  TextPosition(offset: prediction.description!.length));
+            }
+          // default 600 ms ,
         ),
       ),
     );

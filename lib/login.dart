@@ -1,5 +1,6 @@
 
 import 'package:app/select.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,8 @@ class login extends StatefulWidget {
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
 String errorMessage = '';
+var userRole;
+
 
 
 
@@ -136,15 +139,18 @@ class _loginState extends State<login> {
                     ),
                     onPressed: () async {
                       try {
-                        UserCredential userCredential =
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        );
+                        String email =  emailController.text;
+                        String passowr = passwordController.text;
+                        getUidFromEmailAndPassword(email,passowr);
+
+
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => select()),
                         );
+
+
                       } on FirebaseAuthException catch (e) {
                         setState(() {
                           errorMessage = e.message!;
@@ -197,4 +203,29 @@ class _loginState extends State<login> {
       ),
     );
   }
+
+
+  Future<String?> getUidFromEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      print("----------------------");
+      print(userCredential?.user?.uid?.toString());
+      print("----------------------");
+
+
+        return userCredential?.user?.uid?.toString();
+
+
+
+    } catch (e) {
+      print('Error signing in: $e');
+      return null;
+    }
+  }
+
+
 }
