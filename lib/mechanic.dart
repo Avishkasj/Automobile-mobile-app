@@ -2,6 +2,7 @@ import 'package:app/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class mechanic extends StatefulWidget {
   const mechanic({Key? key}) : super(key: key);
@@ -102,6 +103,8 @@ class _mechanicState extends State<mechanic> {
                   child: Column(
                     children: List.generate(ordersList.length, (index) {
                       Map<dynamic, dynamic> order = ordersList[index];
+                      dynamic uid = order['userName'];
+                      String uidString = uid.toString();
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
                         child: Column(
@@ -164,7 +167,18 @@ class _mechanicState extends State<mechanic> {
                                               ),
                                             ),
                                             ElevatedButton(
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                // Get the UID of the user, replace 'uid' with the actual UID retrieval logic
+
+                                                 print(uidString);
+
+                                                // Retrieve the phone number from Firestore
+                                                 getPhoneNumber(uid, context);
+                                                //
+                                                // // Use the phone number as needed
+                                                //  print('Phone number: $phoneNumber');
+
+                                                // Call the phone number, or perform any other actions
                                                 // Add your emergency notification logic here
                                               },
                                               child: Text(
@@ -199,4 +213,105 @@ class _mechanicState extends State<mechanic> {
                 ),
               ));
   }
+
+// Define a function to retrieve the phone number based on UID
+//   Future<void> displayMobilePopup(BuildContext context, String mobile) async {
+//     await showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text('Mobile Number'),
+//           content: Text('The mobile number is: $mobile'),
+//           actions: <Widget>[
+//             TextButton(
+//               child: Text('OK'),
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+
+  Future<void> getPhoneNumber(String uid, BuildContext context) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('user')
+          .where('uid', isEqualTo: uid)
+          .get();
+
+      querySnapshot.docs.forEach((doc) {
+        // Access the role value and assign it to a string variable
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        String mobile = data['mobile'] as String;
+        print('Role: $mobile');
+        popup(mobile);
+
+        // displayMobilePopup(context, mobile);
+      });
+    } on FirebaseAuthException catch (e) {
+      // Handle FirebaseAuthException
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
+
+  Future<void> popup(String mobile) async {
+    bool _hasCallSupport = false;
+    Future<void>? _launched;
+    String _phone = '';
+
+    @override
+    void initState() {
+      super.initState();
+      // Check for phone call support.
+      canLaunchUrl(Uri(scheme: 'tel', path: '123')).then((bool result) {
+        setState(() {
+          _hasCallSupport = result;
+        });
+      });
+    }
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Mobile Number'),
+          content: Text('The mobile number is: $mobile'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Call'),
+              onPressed: () async {
+
+                _makePhoneCall(mobile);
+
+
+              },
+
+            ),
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+
 }
