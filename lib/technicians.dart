@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -89,6 +90,7 @@ class _techniciansState extends State<technicians> {
                     itemCount: userDetails?.length,
                     itemBuilder: (context, index) {
                       final user = userDetails![index];
+                      final String macid = user['uid'];
                       return Card(
                         elevation: 4.0,
                         margin: EdgeInsets.all(8.0),
@@ -168,7 +170,19 @@ class _techniciansState extends State<technicians> {
                                         color: Colors.black,
                                       )),
                                       onPressed: () {
-                                        // Contact button pressed
+                                        final FirebaseAuth auth = FirebaseAuth.instance;
+                                        final User? user = auth.currentUser;
+
+
+                                        final Map<String, dynamic> data = {
+                                          'v_type': '${widget.dropdownValue}',
+                                          'v_damage': '${widget.dropdownValue2}',
+                                          'v_fuel': '${widget.dropdownValue3}',
+                                          'userName': user?.uid,
+                                          'Macid': macid,
+                                        };
+
+                                        FirebaseFirestore.instance.collection('order').add(data);
                                       },
                                     ),
                                   ],
