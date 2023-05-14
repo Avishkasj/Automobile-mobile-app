@@ -276,7 +276,7 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: const EdgeInsets.all(25.0),
                 child: Text(
-                  "Macanic",
+                  "Mechanic",
                   style: TextStyle(
                     fontSize: 30,
                   ),
