@@ -147,8 +147,14 @@ class _loginState extends State<login> {
                         String email = emailController.text;
                         String password = passwordController.text;
 
-                        // Get the user ID using your authentication method
+                        if (email.isEmpty || password.isEmpty) {
+                          setState(() {
+                            errorMessage = 'Please enter email and password';
+                          });
+                          return;
+                        }
 
+                        // Get the user ID using your authentication method
                         String? uid = await getUidFromEmailAndPassword(email, password);
 
                         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -162,22 +168,18 @@ class _loginState extends State<login> {
                           String role = data['role'] as String;
                           print('Role: $role');
 
-                          if(role == '1'){
+                          if (role == '1') {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => select()),
                             );
-                          }else if(role == '2'){
+                          } else if (role == '2') {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => mechanic()),
                             );
                           }
-
-
                         });
-
-
                       } on FirebaseAuthException catch (e) {
                         setState(() {
                           errorMessage = e.message!;
@@ -186,6 +188,7 @@ class _loginState extends State<login> {
                         print(e);
                       }
                     },
+
 
 
                   ),
