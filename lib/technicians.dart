@@ -183,6 +183,24 @@ class _techniciansState extends State<technicians> {
                                         };
 
                                         FirebaseFirestore.instance.collection('order').add(data);
+
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Message'),
+                                              content: Text('Notify Successfully.'),
+                                              actions: [
+                                                TextButton(
+                                                  child: Text('OK'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
                                       },
                                     ),
                                   ],
