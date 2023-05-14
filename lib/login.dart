@@ -1,4 +1,3 @@
-
 import 'package:app/mechanic.dart';
 import 'package:app/select.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,11 +16,6 @@ final TextEditingController passwordController = TextEditingController();
 String errorMessage = '';
 var userRole;
 var id;
-
-
-
-
-
 
 class _loginState extends State<login> {
   @override
@@ -66,13 +60,17 @@ class _loginState extends State<login> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(25.0),
-                  child: Text("LogIn",style: TextStyle(
-                    fontSize: 30,
-                  ),),
+                  child: Text(
+                    "LogIn",
+                    style: TextStyle(
+                      fontSize: 30,
+                    ),
+                  ),
                 ),
 
-                SizedBox(height: 0,),
-
+                SizedBox(
+                  height: 0,
+                ),
 
                 //email
                 Padding(
@@ -137,11 +135,10 @@ class _loginState extends State<login> {
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(
                         width: 2.0, // set the border weight to 2.0
-                        color:  Color.fromRGBO(47, 114, 100, 1),
+                        color: Color.fromRGBO(47, 114, 100, 1),
                       ),
                       fixedSize: Size(150, 50),
                     ),
-
                     onPressed: () async {
                       try {
                         String email = emailController.text;
@@ -155,16 +152,19 @@ class _loginState extends State<login> {
                         }
 
                         // Get the user ID using your authentication method
-                        String? uid = await getUidFromEmailAndPassword(email, password);
+                        String? uid =
+                            await getUidFromEmailAndPassword(email, password);
 
-                        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+                        QuerySnapshot querySnapshot = await FirebaseFirestore
+                            .instance
                             .collection('user')
                             .where('uid', isEqualTo: uid)
                             .get();
 
                         querySnapshot.docs.forEach((doc) {
                           // Access the role value and assign it to a string variable
-                          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+                          Map<String, dynamic> data =
+                              doc.data() as Map<String, dynamic>;
                           String role = data['role'] as String;
                           print('Role: $role');
 
@@ -176,7 +176,8 @@ class _loginState extends State<login> {
                           } else if (role == '2') {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => mechanic()),
+                              MaterialPageRoute(
+                                  builder: (context) => mechanic()),
                             );
                           }
                         });
@@ -188,12 +189,8 @@ class _loginState extends State<login> {
                         print(e);
                       }
                     },
-
-
-
                   ),
                 ),
-
 
                 SizedBox(
                   height: 20,
@@ -206,14 +203,16 @@ class _loginState extends State<login> {
                     Text(
                       "Not a member? .",
                       style: TextStyle(
-                        color:  Color.fromRGBO(47, 114, 100, 1),
+                        color: Color.fromRGBO(47, 114, 100, 1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
 
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 // show error message if present
                 if (errorMessage != null)
                   Padding(
@@ -234,42 +233,34 @@ class _loginState extends State<login> {
     );
   }
 
-
-  Future<String?> getUidFromEmailAndPassword(String email, String password) async {
+  Future<String?> getUidFromEmailAndPassword(
+      String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-
 
       print("----------------------");
       print(userCredential?.user?.uid?.toString());
 
       print("----------------------");
 
-      String? uid= userCredential?.user?.uid?.toString();
+      String? uid = userCredential?.user?.uid?.toString();
       // DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection('user').doc(uid).get();
       // String role = userSnapshot.get('role');
 
-      String ?role;
+      String? role;
 
       print("----------------------");
       print(uid);
       print("----------------------");
 
-
-
-
       return uid;
-
-
-
     } catch (e) {
       print('Error signing in: $e');
       return null;
     }
   }
-
-
 }

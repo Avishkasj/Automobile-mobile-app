@@ -91,67 +91,95 @@ class _techniciansState extends State<technicians> {
                       final user = userDetails![index];
                       return Card(
                         elevation: 4.0,
-                        margin: EdgeInsets.all(16.0),
+                        margin: EdgeInsets.all(8.0),
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Column(
                             children: [
-                              CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('assets/img${index + 6}.png'),
-                                radius: 40.0,
-                              ),
-                              SizedBox(width: 16.0),
-                              Expanded(
-                                child: Column(
+                              Container(
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      user['email'] as String,
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
+                                    CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          'assets/img${index + 6}.png'),
+                                      radius: 40.0,
+                                    ),
+                                    SizedBox(width: 16.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            user['name'] as String,
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(height: 8.0),
+                                          Text(
+                                            user['mobile'] as String,
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5.0),
+                                          Text(
+                                            user['email'] as String,
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          // Row(
+                                          //   children: [
+                                          //     Icon(Icons.star, color: Colors.yellow),
+                                          //     SizedBox(width: 2.0),
+                                          //     Icon(Icons.star, color: Colors.yellow),
+                                          //     SizedBox(width: 2.0),
+                                          //     Icon(Icons.star, color: Colors.yellow),
+                                          //     SizedBox(width: 2.0),
+                                          //     Icon(Icons.star, color: Colors.yellow),
+                                          //     SizedBox(width: 2.0),
+                                          //     // Text(
+                                          //     //   user['rating'],
+                                          //     //   style: TextStyle(fontSize: 16.0),
+                                          //     // ),
+                                          //   ],
+                                          // ),
+                                        ],
                                       ),
                                     ),
-                                    SizedBox(height: 8.0),
-                                    Text(
-                                      user['age'] as String,
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.grey,
+                                    SizedBox(width: 13.0),
+                                    OutlinedButton(
+                                      child: Text(
+                                        "Notify",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.star, color: Colors.yellow),
-                                        SizedBox(width: 8.0),
-                                        // Text(
-                                        //   user['rating'],
-                                        //   style: TextStyle(fontSize: 16.0),
-                                        // ),
-                                      ],
+                                      style: OutlinedButton.styleFrom(
+                                          side: BorderSide(
+                                        width:
+                                            2.0, // set the border weight to 2.0
+                                        color: Colors.black,
+                                      )),
+                                      onPressed: () {
+                                        // Contact button pressed
+                                      },
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(width: 16.0),
-                              OutlinedButton(
-                                child: Text(
-                                  "Contact",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
+                              Text(
+                                user['address'] as String,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.grey,
                                 ),
-                                style: OutlinedButton.styleFrom(
-                                    side: BorderSide(
-                                  width: 2.0, // set the border weight to 2.0
-                                  color: Colors.black,
-                                )),
-                                onPressed: () {
-                                  // Contact button pressed
-                                },
                               ),
                             ],
                           ),
