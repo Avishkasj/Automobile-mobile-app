@@ -155,11 +155,20 @@ class _loginState extends State<login> {
                         String? uid =
                             await getUidFromEmailAndPassword(email, password);
 
-                        QuerySnapshot querySnapshot = await FirebaseFirestore
-                            .instance
-                            .collection('user')
-                            .where('uid', isEqualTo: uid)
-                            .get();
+                        // Check if the user exists in the database
+                        QuerySnapshot querySnapshot =
+                            await FirebaseFirestore.instance
+                                .collection('user')
+                                .where('uid', isEqualTo: uid)
+                                .limit(1) // Limit the query to 1 document
+                                .get();
+
+                        if (uid==null) {
+                          setState(() {
+                            errorMessage = 'User not found';
+                          });
+                          return;
+                        }
 
                         querySnapshot.docs.forEach((doc) {
                           // Access the role value and assign it to a string variable
