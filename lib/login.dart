@@ -262,7 +262,12 @@ class _loginState extends State<login> {
 
       String? role;
 
-      print("----------------------");
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => select()),
+      // );
+
+      print("----------+------------");
       print(uid);
       print("----------------------");
 

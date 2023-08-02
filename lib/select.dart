@@ -1,7 +1,15 @@
+import 'dart:async';
+
 import 'package:app/technicians.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
+
+import 'MapSample.dart';
+
 
 const List<String> list = <String>[
   ' Cars/Vans/ Cabs and Jeeps ',
@@ -31,16 +39,61 @@ const List<String> list3 = <String>[
 
 ];
 
+
+
+
+
+
+
+
 class select extends StatefulWidget {
+
   const select({Key? key}) : super(key: key);
+
+
 
   @override
   State<select> createState() => _selectState();
 }
 
 TextEditingController address = TextEditingController();
+final TextEditingController _locationController = TextEditingController();
+
 
 class _selectState extends State<select> {
+
+
+  final Completer<GoogleMapController> _controller =
+  Completer<GoogleMapController>();
+
+  //new added
+  static const LatLng _initialCameraPosition = LatLng(6.927079, 79.861244);
+  Set<Marker> _markers = Set<Marker>();
+  late GoogleMapController _mapController;
+  LatLng? _pickedLocation;
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+    _mapController = controller;
+  }
+
+  void _pickLocation(LatLng position) async {
+    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark placemark = placemarks[0];
+    String address = placemark.locality!+", "+ placemark.country!;
+
+    setState(() {
+      _pickedLocation = position;
+      _markers.clear();
+      _markers.add(Marker(
+        markerId: MarkerId('picked-location'),
+        position: _pickedLocation!,
+      ));
+      _locationController.text = address;
+    });
+
+  }
+  // late String naddress;
   String dropdownValue = list.first;
   String dropdownValue2 = list2.first;
   String dropdownValue3 = list3.first;
@@ -208,14 +261,79 @@ class _selectState extends State<select> {
                 ),
               ),
 
-              Container(
-                child: Column(
-                    children: <Widget>[
-                      SizedBox(height: 20),
-                      placesAutoCompleteTextField(),
-                    ],
+
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(3)),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: TextField(
+                controller: _locationController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      // handle the tap event
+                      print('Icon tapped!');
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            height:
+                            MediaQuery.of(context).size.height * 0.46,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0),
+                              ),
+                            ),
+                            child: Column(
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                Expanded(
+                                  child: GoogleMap(
+                                    onMapCreated: _onMapCreated,
+                                    initialCameraPosition: CameraPosition(
+                                      target: _initialCameraPosition,
+                                      zoom: 11.0,
+                                    ),
+                                    markers: _markers,
+                                    onTap: _pickLocation,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  hintText: 'Pic Address , ',
                 ),
               ),
+            ),
+          ),
+        ),
+
+              // Container(
+              //   child: Column(
+              //       children: <Widget>[
+              //         SizedBox(height: 20),
+              //         placesAutoCompleteTextField(),
+              //       ],
+              //   ),
+              // ),
 
 
 
@@ -241,8 +359,8 @@ class _selectState extends State<select> {
                         fixedSize: Size(140, 50),
                       ),
                       onPressed: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) => select()));
+                         Navigator.push(context,
+                             MaterialPageRoute(builder: (context) => MapSample()));
                       },
                     ),
                   ),
@@ -264,7 +382,7 @@ class _selectState extends State<select> {
                         fixedSize: Size(140, 50),
                       ),
                       onPressed: () {
-                        String addressValue = address.text; // the value entered in the address field
+                        String addressValue = _locationController.text; // the value entered in the address field
 
                         Navigator.push(
                           context,
@@ -281,6 +399,23 @@ class _selectState extends State<select> {
 
                     ),
                   ),
+
+                  //location
+                  // Padding(
+                  //   padding:
+                  //   EdgeInsets.only(top: 20, bottom: 8, left: 25, right: 5),
+                  //   child: Text(
+                  //     "Select Location ",
+                  //     style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontWeight: FontWeight.w800,
+                  //     ),
+                  //   ),
+                  // ),
+
+
+
+
                 ],
               ),
             ],
@@ -317,5 +452,7 @@ class _selectState extends State<select> {
         ),
       ),
     );
+
+
   }
 }
