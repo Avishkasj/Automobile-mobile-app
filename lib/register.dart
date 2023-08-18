@@ -494,10 +494,10 @@ class _RegisterPageState extends State<RegisterPage> {
         });
 
         // Register the user with Firebase Authentication
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email, // Use the email as the username
-          password: password,
-        );
+        // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        //   email: email, // Use the email as the username
+        //   password: password,
+        // );
 
         // Navigate to the select page
         Navigator.push(
